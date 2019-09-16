@@ -42,7 +42,6 @@ window.renderStatistics = function (ctx, names, times) {
 
   for (var i = 0; i < names.length; i++) {
     ctx.fillStyle = '#000';
-    var contrastBlue2 = Math.round(Math.random(10, 90) * 100);
     ctx.fillText(names[i], DESC_X + (HIST_WIDTH + HIST_GAP) * i, DESC_Y);
     ctx.fillText(Math.round(times[i]), DESC_X + (HIST_WIDTH + HIST_GAP) * i, DESC_Y - (times[i] / maxTime * HIST_HEIGHT) - DESC_GAP);
     ctx.fillStyle = names[i] === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'hsl(240, 100%,' + Math.round(Math.random(30, 70) * 100) + '%)';
