@@ -4,8 +4,6 @@ var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
 var CLOUD_X = 100;
 var CLOUD_Y = 10;
-var CLOUD_COLOR = '#fff';
-var CLOUD_SHADOW_COLOR = 'rgba(0, 0, 0, 0.7)';
 var GAP = 10;
 var HIST_WIDTH = 40;
 var HIST_HEIGHT = 150;
@@ -18,9 +16,13 @@ var DESC_GAP = 30;
 var TEXT_X = 120;
 var TEXT_Y = 40;
 var TEXT_HEIGHT = 20;
-var TEXT_COLOR = '#000';
 var TEXT_STYLE = '16px PT Mono';
-var YOUR_HIST_COLOR = 'rgba(255, 0, 0, 1)';
+var COLORS = {
+  CLOUD: '#fff',
+  CLOUD_SHADOW: 'rgba(0, 0, 0, 0.7)',
+  TEXT: '#000',
+  YOUR_HIST: 'rgba(255, 0, 0, 1)'
+};
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -28,13 +30,7 @@ var renderCloud = function (ctx, x, y, color) {
 };
 
 var getMaxElement = function (arr) {
-  var maxElement = arr[0];
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
-    }
-  }
-  return maxElement;
+  return Math.max.apply(null, arr);
 };
 
 var getRandomIntInclusive = function (min, max) {
@@ -49,10 +45,10 @@ var getRandomLightness = function (hue, saturation) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, CLOUD_SHADOW_COLOR);
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR);
+  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, COLORS.CLOUD_SHADOW);
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, COLORS.CLOUD);
 
-  ctx.fillStyle = TEXT_COLOR;
+  ctx.fillStyle = COLORS.TEXT;
   ctx.font = TEXT_STYLE;
   ctx.fillText('Ура вы победили!', TEXT_X, TEXT_Y);
   ctx.fillText('Список результатов:', TEXT_X, TEXT_Y + TEXT_HEIGHT);
@@ -60,15 +56,14 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < names.length; i++) {
-    var OTHER_HIST_COLOR = getRandomLightness(240, 100);
     var textXCalculate = DESC_X + (HIST_WIDTH + HIST_GAP) * i;
     var histXCalculate = HIST_X + (HIST_WIDTH + HIST_GAP) * i;
     var histHieghtCalculate = times[i] / maxTime * HIST_HEIGHT;
 
-    ctx.fillStyle = TEXT_COLOR;
+    ctx.fillStyle = COLORS.TEXT;
     ctx.fillText(names[i], textXCalculate, DESC_Y);
     ctx.fillText(Math.round(times[i]), textXCalculate, DESC_Y - histHieghtCalculate - DESC_GAP);
-    ctx.fillStyle = names[i] === 'Вы' ? YOUR_HIST_COLOR : OTHER_HIST_COLOR;
+    ctx.fillStyle = names[i] === 'Вы' ? COLORS.YOUR_HIST : getRandomLightness(240, 100);
     ctx.fillRect(histXCalculate, HIST_Y, HIST_WIDTH, -histHieghtCalculate);
   }
 };
