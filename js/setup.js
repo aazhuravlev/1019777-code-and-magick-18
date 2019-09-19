@@ -11,6 +11,16 @@ var getRandomItem = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
+var getWizardsNames = function (wizards, names, surnames) {
+  var wizardsNames = [];
+
+  for (var i = 0; i < wizards; i++) {
+    var wizardName = names.splice(0, 1) + ' ' + surnames.splice(0, 1);
+    wizardsNames.push(wizardName);
+  }
+  return wizardsNames;
+};
+
 document.querySelector('.setup').classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
