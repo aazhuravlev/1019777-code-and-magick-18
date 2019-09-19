@@ -31,6 +31,8 @@ var getWizardsColors = function (quantity, colors) {
   return wizardsColors;
 };
 
+var dataArr = [getWizardsNames(wizardsQuantity, WIZARD_NAMES, WIZARD_SURNAMES), getWizardsColors(wizardsQuantity, COAT_COLORS), getWizardsColors(wizardsQuantity, EYES_COLORS)];
+
 document.querySelector('.setup').classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
