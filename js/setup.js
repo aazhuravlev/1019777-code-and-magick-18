@@ -12,13 +12,13 @@ var getRandomItem = function (arr) {
 };
 
 var getWizardsNames = function (wizards, names, surnames) {
-  var wizardsNames = [];
+  var wizardsNamesSurnames = [];
 
   for (var i = 0; i < wizards; i++) {
     var wizardName = names.splice(0, 1) + ' ' + surnames.splice(0, 1);
-    wizardsNames.push(wizardName);
+    wizardsNamesSurnames.push(wizardName);
   }
-  return wizardsNames;
+  return wizardsNamesSurnames;
 };
 
 var getWizardsColors = function (wizards, colors) {
