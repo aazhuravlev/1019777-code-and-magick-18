@@ -30,6 +30,10 @@ var getWizardsColors = function (wizards, colors) {
   return wizardsColors;
 };
 
+WIZARD.name = getWizardsNames(wizardsQuantity, wizardsNames, wizardsSurnames);
+WIZARD.coatColor = getWizardsColors(wizardsQuantity, coatColor);
+WIZARD.eyesColor = getWizardsColors(wizardsQuantity, eyesColor);
+
 document.querySelector('.setup').classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
