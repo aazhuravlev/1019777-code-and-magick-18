@@ -33,6 +33,22 @@ var getWizardsColors = function (quantity, colors) {
 
 var dataArr = [getWizardsNames(wizardsQuantity, WIZARD_NAMES, WIZARD_SURNAMES), getWizardsColors(wizardsQuantity, COAT_COLORS), getWizardsColors(wizardsQuantity, EYES_COLORS)];
 
+var getData = function (arrKey, arr) {
+  wizards = [];
+
+  for (var i = 0; i < wizardsQuantity; i++) {
+    var obj = {};
+
+    for (var j = 0; j < arrKey.length; j++) {
+      obj[arrKey[j]] = arr[j][i];
+    }
+    wizards.push(obj);
+  }
+  return wizards;
+};
+
+wizards = getData(KEYS, dataArr);
+
 document.querySelector('.setup').classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
