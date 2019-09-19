@@ -1,6 +1,5 @@
 'use strict';
 
-var wizards = [];
 var wizardsQuantity = 4;
 var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
@@ -11,13 +10,19 @@ var getRandomItem = function (arr) {
   return arr.splice(Math.floor(Math.random() * arr.length), 1);
 };
 
-for (i = 0; i < wizardsQuantity; i++) {
-  wizards.push({
-    name: getRandomItem(WIZARD_NAMES) + ' ' + getRandomItem(WIZARD_SURNAMES),
-    coatColor: getRandomItem(COAT_COLORS),
-    eyesColor: getRandomItem(EYES_COLORS)
-  });
-}
+var getWizardsObject = function (quantity) {
+  var wizards = [];
+  for (i = 0; i < quantity; i++) {
+    wizards.push({
+      name: getRandomItem(WIZARD_NAMES) + ' ' + getRandomItem(WIZARD_SURNAMES),
+      coatColor: getRandomItem(COAT_COLORS),
+      eyesColor: getRandomItem(EYES_COLORS)
+    });
+  }
+  return wizards;
+};
+
+var WIZARDS = getWizardsObject(wizardsQuantity);
 
 var USER_DIALOG = document.querySelector('.setup');
 USER_DIALOG.classList.remove('hidden');
@@ -39,8 +44,8 @@ var renderWizard = function (wizard) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
+for (var i = 0; i < WIZARDS.length; i++) {
+  fragment.appendChild(renderWizard(WIZARDS[i]));
 }
 SIMILAR_LIST_ELEMENT.appendChild(fragment);
 
