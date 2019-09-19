@@ -8,14 +8,14 @@ var COAT_COLORS = ['rgb (101, 137, 164)', 'rgb (241, 43, 107)', 'rgb (146, 100, 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var getRandomItem = function (arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+  return arr.splice(Math.floor(Math.random() * arr.length), 1);
 };
 
 var getWizardsNames = function (quantity, names, surnames) {
   var wizardsNamesSurnames = [];
 
   for (var i = 0; i < quantity; i++) {
-    var wizardName = names.splice(0, 1) + ' ' + surnames.splice(0, 1);
+    var wizardName = getRandomItem(names) + ' ' + getRandomItem(surnames);
     wizardsNamesSurnames.push(wizardName);
   }
   return wizardsNamesSurnames;
