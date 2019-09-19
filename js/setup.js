@@ -19,17 +19,17 @@ for (i = 0; i < wizardsQuantity; i++) {
   });
 }
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+var USER_DIALOG = document.querySelector('.setup');
+USER_DIALOG.classList.remove('hidden');
 
-var similarListElement = userDialog.querySelector('.setup-similar-list');
+var SIMILAR_LIST_ELEMENT = USER_DIALOG.querySelector('.setup-similar-list');
 
-var similarWizardTemplate = document.querySelector('#similar-wizard-template')
+var SIMILAR_WIZARD_TEMPLATE = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
 var renderWizard = function (wizard) {
-  var wizardElement = similarWizardTemplate.cloneNode(true);
+  var wizardElement = SIMILAR_WIZARD_TEMPLATE.cloneNode(true);
 
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
@@ -42,6 +42,6 @@ var fragment = document.createDocumentFragment();
 for (var i = 0; i < wizards.length; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
 }
-similarListElement.appendChild(fragment);
+SIMILAR_LIST_ELEMENT.appendChild(fragment);
 
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
