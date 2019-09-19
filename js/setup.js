@@ -21,6 +21,15 @@ var getWizardsNames = function (wizards, names, surnames) {
   return wizardsNames;
 };
 
+var getWizardsColors = function (wizards, colors) {
+  var wizardsColors = [];
+
+  for (var i = 0; i < wizards; i++) {
+    wizardsColors.push(getRandomItem(colors));
+  }
+  return wizardsColors;
+};
+
 document.querySelector('.setup').classList.remove('hidden');
 document.querySelector('.setup-similar').classList.remove('hidden');
 
