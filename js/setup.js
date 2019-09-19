@@ -12,7 +12,7 @@ var getRandomItem = function (arr) {
 
 var getWizardsObject = function (quantity) {
   var wizards = [];
-  for (i = 0; i < quantity; i++) {
+  for (var i = 0; i < quantity; i++) {
     wizards.push({
       name: getRandomItem(WIZARD_NAMES) + ' ' + getRandomItem(WIZARD_SURNAMES),
       coatColor: getRandomItem(COAT_COLORS),
@@ -43,10 +43,14 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < WIZARDS.length; i++) {
-  fragment.appendChild(renderWizard(WIZARDS[i]));
-}
-SIMILAR_LIST_ELEMENT.appendChild(fragment);
+var getFragment = function (arr) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(renderWizard(arr[i]));
+  }
+  return fragment;
+};
+
+SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
 
 USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
