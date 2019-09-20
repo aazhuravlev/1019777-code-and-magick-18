@@ -51,7 +51,6 @@ var getFragment = function (arr) {
 };
 
 var WIZARDS = getWizards(WIZARDS_QUANTITY);
-
+SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
 USER_DIALOG.classList.remove('hidden');
 USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
-SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
