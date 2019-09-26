@@ -13,6 +13,8 @@ var SIMILAR_LIST_ELEMENT = USER_DIALOG.querySelector('.setup-similar-list');
 var SIMILAR_WIZARD_TEMPLATE = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var getRandomItem = function (arr) {
   return arr.splice(Math.floor(Math.random() * arr.length), 1);
@@ -52,14 +54,43 @@ var getFragment = function (arr) {
   return fragment;
 };
 
-var WIZARDS = getWizards(WIZARDS_QUANTITY);
-SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
-OPEN_USER_DIALOG.addEventListener('click', function () {
+var onUserDialogEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeUserDialog();
+  }
+};
+
+var openUserDialog = function () {
   USER_DIALOG.classList.remove('hidden');
   USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
+  document.addEventListener('keydown', onUserDialogEscPress);
+};
+
+var closeUserDialog = function () {
+  USER_DIALOG.classList.add('hidden');
+  USER_DIALOG.querySelector('.setup-similar').classList.add('hidden');
+  document.removeEventListener('keydown', onUserDialogEscPress);
+};
+
+var WIZARDS = getWizards(WIZARDS_QUANTITY);
+SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
+
+OPEN_USER_DIALOG.addEventListener('click', function () {
+  openUserDialog();
+});
+
+OPEN_USER_DIALOG.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openUserDialog();
+  }
 });
 
 CLOSE_USER_DIALOG.addEventListener('click', function () {
-  USER_DIALOG.classList.add('hidden');
-  USER_DIALOG.querySelector('.setup-similar').classList.add('hidden');
+  closeUserDialog();
+});
+
+CLOSE_USER_DIALOG.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closeUserDialog();
+  }
 });
