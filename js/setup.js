@@ -7,6 +7,8 @@ var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var USER_DIALOG = document.querySelector('.setup');
+var OPEN_USER_DIALOG = document.querySelector('.setup-open');
+var CLOSE_USER_DIALOG = USER_DIALOG.querySelector('.setup-close');
 var SIMILAR_LIST_ELEMENT = USER_DIALOG.querySelector('.setup-similar-list');
 var SIMILAR_WIZARD_TEMPLATE = document.querySelector('#similar-wizard-template')
   .content
@@ -52,5 +54,12 @@ var getFragment = function (arr) {
 
 var WIZARDS = getWizards(WIZARDS_QUANTITY);
 SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
-USER_DIALOG.classList.remove('hidden');
-USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
+OPEN_USER_DIALOG.addEventListener('click', function () {
+  USER_DIALOG.classList.remove('hidden');
+  USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
+});
+
+CLOSE_USER_DIALOG.addEventListener('click', function () {
+  USER_DIALOG.classList.add('hidden');
+  USER_DIALOG.querySelector('.setup-similar').classList.add('hidden');
+});
