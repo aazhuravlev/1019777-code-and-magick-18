@@ -13,7 +13,6 @@ var SETUP_USER_NAME = document.querySelector('.setup-user-name');
 var SETUP_FIREBALL = document.querySelector('.setup-fireball-wrap');
 var SETUP_EYES = document.querySelector('.wizard-eyes');
 var SETUP_COAT = document.querySelector('.wizard-coat');
-var SETUP_SUBMIT = document.querySelector('.setup-submit');
 var OPEN_USER_DIALOG = document.querySelector('.setup-open');
 var CLOSE_USER_DIALOG = USER_DIALOG.querySelector('.setup-close');
 var SIMILAR_LIST_ELEMENT = USER_DIALOG.querySelector('.setup-similar-list');
