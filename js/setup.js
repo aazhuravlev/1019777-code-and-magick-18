@@ -7,6 +7,8 @@ var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var USER_DIALOG = document.querySelector('.setup');
+var SETUP_USER_NAME = document.querySelector('.setup-user-name');
+var SETUP_SUBMIT = document.querySelector('.setup-submit');
 var OPEN_USER_DIALOG = document.querySelector('.setup-open');
 var CLOSE_USER_DIALOG = USER_DIALOG.querySelector('.setup-close');
 var SIMILAR_LIST_ELEMENT = USER_DIALOG.querySelector('.setup-similar-list');
@@ -92,5 +94,11 @@ CLOSE_USER_DIALOG.addEventListener('click', function () {
 CLOSE_USER_DIALOG.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     closeUserDialog();
+  }
+});
+
+SETUP_USER_NAME.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    evt.stopPropagation();
   }
 });
