@@ -58,9 +58,9 @@ var renderWizard = function (wizard) {
 
 var getFragment = function (arr) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < arr.length; i++) {
-    fragment.appendChild(renderWizard(arr[i]));
-  }
+  arr.forEach(function (item) {
+    fragment.appendChild(renderWizard(item));
+  });
   return fragment;
 };
 
