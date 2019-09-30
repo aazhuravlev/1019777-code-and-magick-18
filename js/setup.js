@@ -119,18 +119,54 @@ SETUP_USER_NAME.addEventListener('keydown', userNameKeydownHandler);
 
 SETUP_FIREBALL.addEventListener('click', function () {
   var fireballColor = getRandomArrItem(FIREBALL_COLORS);
-  SETUP_FIREBALL.style = 'background-color: ' + fireballColor + '';
-  SETUP_FIREBALL.querySelector('input[name=fireball-color').value = fireballColor;
+  SETUP_FIREBALL.style = 'background-color: ' + fireballColor;
+  SETUP_PLAYER.querySelector('input[name=fireball-color').value = fireballColor;
 });
 
 SETUP_COAT.addEventListener('click', function () {
   var coatColor = getRandomArrItem(COAT_COLORS);
-  SETUP_COAT.style.fill = coatColor;
+  SETUP_COAT.style = 'fill: ' + coatColor;
   SETUP_PLAYER.querySelector('input[name=coat-color]').value = coatColor;
 });
 
 SETUP_EYES.addEventListener('click', function () {
   var eyesColor = getRandomArrItem(EYES_COLORS);
-  SETUP_EYES.style.fill = eyesColor;
+  SETUP_EYES.style = 'fill: ' + eyesColor;
   SETUP_PLAYER.querySelector('input[name=eyes-color]').value = eyesColor;
 });
+
+/*
+var changeWizardColor = function () {
+  var setupWizardParts = {
+    SETUP_FIREBALL: {
+      selector: '.setup-fireball-wrap',
+      color: getRandomArrItem(FIREBALL_COLORS),
+      target: 'input[name=fireball-color]'
+    },
+    SETUP_COAT: {
+      selector: '.wizard-coat',
+      color: getRandomArrItem(COAT_COLORS),
+      target: 'input[name=coat-color]'
+    },
+    SETUP_EYES: {
+      selector: '.wizard-eyes',
+      color: getRandomArrItem(EYES_COLORS),
+      target: 'input[name=eyes-color]'
+    }
+  };
+
+  setupWizardParts.SETUP_FIREBALL.tagStyle = 'background-color: ' + setupWizardParts.SETUP_FIREBALL.color;
+  setupWizardParts.SETUP_COAT.tagStyle = 'fill: ' + setupWizardParts.SETUP_COAT.color;
+  setupWizardParts.SETUP_EYES.tagStyle = 'fill: ' + setupWizardParts.SETUP_EYES.color;
+
+  Object.keys(setupWizardParts).forEach(function (key) {
+    key.addEventListener('click', function () {
+      setupWizardParts[key].style = setupWizardParts[key].tagStyle;
+      SETUP_PLAYER.querySelector(setupWizardParts[key].target).value = setupWizardParts[key].color;
+    });
+  });
+  return;
+};
+
+changeWizardColor();
+*/
