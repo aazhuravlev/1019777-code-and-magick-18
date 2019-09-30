@@ -64,7 +64,7 @@ var getFragment = function (arr) {
   return fragment;
 };
 
-var onUserDialogEscPress = function (evt) {
+var userDialogEscPressHendler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closeUserDialog();
   }
@@ -73,43 +73,49 @@ var onUserDialogEscPress = function (evt) {
 var openUserDialog = function () {
   USER_DIALOG.classList.remove('hidden');
   USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
-  document.addEventListener('keydown', onUserDialogEscPress);
+  document.addEventListener('keydown', userDialogEscPressHendler);
 };
 
 var closeUserDialog = function () {
   USER_DIALOG.classList.add('hidden');
   USER_DIALOG.querySelector('.setup-similar').classList.add('hidden');
-  document.removeEventListener('keydown', onUserDialogEscPress);
+  document.removeEventListener('keydown', userDialogEscPressHendler);
+};
+
+var openDialogClickHandler = function () {
+  openUserDialog();
+};
+
+var closeDialogClickHandler = function () {
+  closeUserDialog();
+};
+
+var openDialogKeydownHandler = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openUserDialog();
+  }
+};
+
+var closeDialogKeydownHandler = function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closeUserDialog();
+  }
+};
+
+var userNameKeydownHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    evt.stopPropagation();
+  }
 };
 
 var WIZARDS = getWizards(WIZARDS_QUANTITY);
 SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
 
-OPEN_USER_DIALOG.addEventListener('click', function () {
-  openUserDialog();
-});
-
-OPEN_USER_DIALOG.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    openUserDialog();
-  }
-});
-
-CLOSE_USER_DIALOG.addEventListener('click', function () {
-  closeUserDialog();
-});
-
-CLOSE_USER_DIALOG.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    closeUserDialog();
-  }
-});
-
-SETUP_USER_NAME.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    evt.stopPropagation();
-  }
-});
+OPEN_USER_DIALOG.addEventListener('click', openDialogClickHandler);
+OPEN_USER_DIALOG.addEventListener('keydown', openDialogKeydownHandler);
+CLOSE_USER_DIALOG.addEventListener('click', closeDialogClickHandler);
+CLOSE_USER_DIALOG.addEventListener('keydown', closeDialogKeydownHandler);
+SETUP_USER_NAME.addEventListener('keydown', userNameKeydownHandler);
 
 SETUP_FIREBALL.addEventListener('click', function () {
   var fireballColor = getRandomArrItem(FIREBALL_COLORS);
