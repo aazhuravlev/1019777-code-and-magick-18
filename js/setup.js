@@ -15,6 +15,7 @@ var SETUP_EYES = document.querySelector('.wizard-eyes');
 var SETUP_COAT = document.querySelector('.wizard-coat');
 var OPEN_USER_DIALOG = document.querySelector('.setup-open');
 var CLOSE_USER_DIALOG = USER_DIALOG.querySelector('.setup-close');
+var SETUP_SIMILAR = USER_DIALOG.querySelector('.setup-similar');
 var SIMILAR_LIST_ELEMENT = USER_DIALOG.querySelector('.setup-similar-list');
 var SIMILAR_WIZARD_TEMPLATE = document.querySelector('#similar-wizard-template')
   .content
@@ -72,13 +73,13 @@ var userDialogEscPressHendler = function (evt) {
 
 var openUserDialog = function () {
   USER_DIALOG.classList.remove('hidden');
-  USER_DIALOG.querySelector('.setup-similar').classList.remove('hidden');
+  SETUP_SIMILAR.classList.remove('hidden');
   document.addEventListener('keydown', userDialogEscPressHendler);
 };
 
 var closeUserDialog = function () {
   USER_DIALOG.classList.add('hidden');
-  USER_DIALOG.querySelector('.setup-similar').classList.add('hidden');
+  SETUP_SIMILAR.classList.add('hidden');
   document.removeEventListener('keydown', userDialogEscPressHendler);
 };
 
