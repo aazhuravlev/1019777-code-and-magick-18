@@ -109,32 +109,34 @@ var userNameKeydownHandler = function (evt) {
   }
 };
 
-var WIZARDS = getWizards(WIZARDS_QUANTITY);
-SIMILAR_LIST_ELEMENT.appendChild(getFragment(WIZARDS));
+var main = function (quantity) {
+  OPEN_USER_DIALOG.addEventListener('click', openDialogClickHandler);
+  OPEN_USER_DIALOG.addEventListener('keydown', openDialogKeydownHandler);
+  CLOSE_USER_DIALOG.addEventListener('click', closeDialogClickHandler);
+  CLOSE_USER_DIALOG.addEventListener('keydown', closeDialogKeydownHandler);
+  SETUP_USER_NAME.addEventListener('keydown', userNameKeydownHandler);
 
-OPEN_USER_DIALOG.addEventListener('click', openDialogClickHandler);
-OPEN_USER_DIALOG.addEventListener('keydown', openDialogKeydownHandler);
-CLOSE_USER_DIALOG.addEventListener('click', closeDialogClickHandler);
-CLOSE_USER_DIALOG.addEventListener('keydown', closeDialogKeydownHandler);
-SETUP_USER_NAME.addEventListener('keydown', userNameKeydownHandler);
+  SETUP_FIREBALL.addEventListener('click', function () {
+    var fireballColor = getRandomArrItem(FIREBALL_COLORS);
+    SETUP_FIREBALL.style = 'background-color: ' + fireballColor;
+    SETUP_PLAYER.querySelector('fireball-color').value = fireballColor;
+  });
 
-SETUP_FIREBALL.addEventListener('click', function () {
-  var fireballColor = getRandomArrItem(FIREBALL_COLORS);
-  SETUP_FIREBALL.style = 'background-color: ' + fireballColor;
-  SETUP_PLAYER.querySelector('fireball-color').value = fireballColor;
-});
+  SETUP_COAT.addEventListener('click', function () {
+    var coatColor = getRandomArrItem(COAT_COLORS);
+    SETUP_COAT.style = 'fill: ' + coatColor;
+    SETUP_PLAYER.querySelector('coat-color]').value = coatColor;
+  });
 
-SETUP_COAT.addEventListener('click', function () {
-  var coatColor = getRandomArrItem(COAT_COLORS);
-  SETUP_COAT.style = 'fill: ' + coatColor;
-  SETUP_PLAYER.querySelector('coat-color]').value = coatColor;
-});
+  SETUP_EYES.addEventListener('click', function () {
+    var eyesColor = getRandomArrItem(EYES_COLORS);
+    SETUP_EYES.style = 'fill: ' + eyesColor;
+    SETUP_PLAYER.querySelector('eyes-color]').value = eyesColor;
+  });
+  return SIMILAR_LIST_ELEMENT.appendChild(getFragment(getWizards(quantity)));
+};
 
-SETUP_EYES.addEventListener('click', function () {
-  var eyesColor = getRandomArrItem(EYES_COLORS);
-  SETUP_EYES.style = 'fill: ' + eyesColor;
-  SETUP_PLAYER.querySelector('eyes-color]').value = eyesColor;
-});
+main(WIZARDS_QUANTITY);
 
 /*
 var changeWizardColor = function () {
