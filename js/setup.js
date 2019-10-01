@@ -110,6 +110,8 @@ var userNameKeydownHandler = function (evt) {
 };
 
 var main = function (quantity) {
+  SIMILAR_LIST_ELEMENT.appendChild(getFragment(getWizards(quantity)));
+
   OPEN_USER_DIALOG.addEventListener('click', openDialogClickHandler);
   OPEN_USER_DIALOG.addEventListener('keydown', openDialogKeydownHandler);
   CLOSE_USER_DIALOG.addEventListener('click', closeDialogClickHandler);
@@ -125,15 +127,14 @@ var main = function (quantity) {
   SETUP_COAT.addEventListener('click', function () {
     var coatColor = getRandomArrItem(COAT_COLORS);
     SETUP_COAT.style = 'fill: ' + coatColor;
-    SETUP_PLAYER.querySelector('coat-color]').value = coatColor;
+    SETUP_PLAYER.querySelector('coat-color').value = coatColor;
   });
 
   SETUP_EYES.addEventListener('click', function () {
     var eyesColor = getRandomArrItem(EYES_COLORS);
     SETUP_EYES.style = 'fill: ' + eyesColor;
-    SETUP_PLAYER.querySelector('eyes-color]').value = eyesColor;
+    SETUP_PLAYER.querySelector('eyes-color').value = eyesColor;
   });
-  return SIMILAR_LIST_ELEMENT.appendChild(getFragment(getWizards(quantity)));
 };
 
 main(WIZARDS_QUANTITY);
