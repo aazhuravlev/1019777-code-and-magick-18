@@ -23,12 +23,22 @@ var SIMILAR_WIZARD_TEMPLATE = document.querySelector('#similar-wizard-template')
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
-var spliceRandomItem = function (arr) {
-  return arr.splice(Math.floor(Math.random() * arr.length), 1);
+var getRandomBetween = function (min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var getRandomArrItem = function (arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+var getRandomIndex = function (max) {
+  return getRandomBetween(0, max - 1);
+};
+
+var spliceRandomItem = function (arr) {
+  return arr.splice(getRandomIndex(arr.length - 1), 1);
+};
+
+var getRandomItem = function (arr) {
+  return arr[getRandomIndex(arr.length)];
 };
 
 var getWizards = function (quantity) {
@@ -119,19 +129,19 @@ var main = function (quantity) {
   SETUP_USER_NAME.addEventListener('keydown', userNameKeydownHandler);
 
   SETUP_FIREBALL.addEventListener('click', function () {
-    var fireballColor = getRandomArrItem(FIREBALL_COLORS);
+    var fireballColor = getRandomItem(FIREBALL_COLORS);
     SETUP_FIREBALL.style = 'background-color: ' + fireballColor;
     SETUP_PLAYER.querySelector('fireball-color').value = fireballColor;
   });
 
   SETUP_COAT.addEventListener('click', function () {
-    var coatColor = getRandomArrItem(COAT_COLORS);
+    var coatColor = getRandomItem(COAT_COLORS);
     SETUP_COAT.style = 'fill: ' + coatColor;
     SETUP_PLAYER.querySelector('coat-color').value = coatColor;
   });
 
   SETUP_EYES.addEventListener('click', function () {
-    var eyesColor = getRandomArrItem(EYES_COLORS);
+    var eyesColor = getRandomItem(EYES_COLORS);
     SETUP_EYES.style = 'fill: ' + eyesColor;
     SETUP_PLAYER.querySelector('eyes-color').value = eyesColor;
   });
@@ -144,17 +154,17 @@ var changeWizardColor = function () {
   var setupWizardParts = {
     SETUP_FIREBALL: {
       selector: '.setup-fireball-wrap',
-      color: getRandomArrItem(FIREBALL_COLORS),
+      color: getRandomItem(FIREBALL_COLORS),
       target: 'input[name=fireball-color]'
     },
     SETUP_COAT: {
       selector: '.wizard-coat',
-      color: getRandomArrItem(COAT_COLORS),
+      color: getRandomItem(COAT_COLORS),
       target: 'input[name=coat-color]'
     },
     SETUP_EYES: {
       selector: '.wizard-eyes',
-      color: getRandomArrItem(EYES_COLORS),
+      color: getRandomItem(EYES_COLORS),
       target: 'input[name=eyes-color]'
     }
   };
