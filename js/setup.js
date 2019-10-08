@@ -15,34 +15,35 @@ var SELECTORS_DATA = {
 };
 
 var findNodes = function (obj) {
-  var selectors = {};
+  var nodes = {};
   var keys = Object.keys(obj);
   keys.forEach(function (key) {
-    selectors[key] = document.querySelector(obj[key]);
+    nodes[key] = document.querySelector(obj[key]);
   });
-  selectors.setupClose = selectors.userDialog.querySelector('.setup-close');
-  selectors.setupSimilar = selectors.userDialog.querySelector('.setup-similar');
-  selectors.setupSimilarList = selectors.userDialog.querySelector('.setup-similar-list');
-  selectors.setupSimilarItem = selectors.similarWizardTemplate.content.querySelector('.setup-similar-item');
-  selectors.setupFireball = {
-    selector: selectors.userDialog.querySelector('.setup-fireball-wrap'),
+  nodes.setupClose = nodes.userDialog.querySelector('.setup-close');
+  nodes.setupSimilar = nodes.userDialog.querySelector('.setup-similar');
+  nodes.setupSimilarList = nodes.userDialog.querySelector('.setup-similar-list');
+  nodes.setupSimilarItem = nodes.similarWizardTemplate.content.querySelector('.setup-similar-item');
+  nodes.upload = nodes.userDialog.querySelector('.upload');
+  nodes.setupFireball = {
+    selector: nodes.userDialog.querySelector('.setup-fireball-wrap'),
     color: FIREBALL_COLORS,
-    input: selectors.userDialog.querySelector('input[name=fireball-color]'),
+    input: nodes.userDialog.querySelector('input[name=fireball-color]'),
     property: 'background-color: '
   };
-  selectors.setupCoat = {
-    selector: selectors.userDialog.querySelector('.wizard-coat'),
+  nodes.setupCoat = {
+    selector: nodes.userDialog.querySelector('.wizard-coat'),
     color: COAT_COLORS,
-    input: selectors.userDialog.querySelector('[name=coat-color]'),
+    input: nodes.userDialog.querySelector('[name=coat-color]'),
     property: 'fill: '
   };
-  selectors.setupEyes = {
-    selector: selectors.userDialog.querySelector('.wizard-eyes'),
+  nodes.setupEyes = {
+    selector: nodes.userDialog.querySelector('.wizard-eyes'),
     color: EYES_COLORS,
-    input: selectors.userDialog.querySelector('[name=eyes-color]'),
+    input: nodes.userDialog.querySelector('[name=eyes-color]'),
     property: 'fill: '
   };
-  return selectors;
+  return nodes;
 };
 
 var NODES = findNodes(SELECTORS_DATA);
@@ -154,6 +155,53 @@ var changeColorHandler = function (obj) {
   };
 };
 
+var dragHandler = function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var dragged = false;
+
+  var mouseMoveHandler = function (moveEvt) {
+    moveEvt.preventDefault();
+    dragged = true;
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    NODES.userDialog.style.top = (NODES.userDialog.offsetTop - shift.y) + 'px';
+    NODES.userDialog.style.left = (NODES.userDialog.offsetLeft - shift.x) + 'px';
+  };
+
+  var mouseUpHandler = function (upEvt) {
+    upEvt.preventDefault();
+
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+
+    if (dragged) {
+      var preventDefaultClickHandler = function (preventEvt) {
+        preventEvt.preventDefault();
+        NODES.upload.removeEventListener('click', preventDefaultClickHandler);
+      };
+      NODES.upload.addEventListener('click', preventDefaultClickHandler);
+    }
+  };
+
+  document.addEventListener('mousemove', mouseMoveHandler);
+  document.addEventListener('mouseup', mouseUpHandler);
+};
+
 var main = function () {
   NODES.setupSimilarList.appendChild(getFragment(getWizards(WIZARDS_QUANTITY)));
 
@@ -162,7 +210,7 @@ var main = function () {
   NODES.setupClose.addEventListener('click', closeDialogClickHandler);
   NODES.setupClose.addEventListener('keydown', closeDialogKeydownHandler);
   NODES.setupUserName.addEventListener('keydown', userNameKeydownHandler);
-
+  NODES.upload.addEventListener('mousedown', dragHandler);
   NODES.setupFireball.selector.addEventListener('click', changeColorHandler(NODES.setupFireball));
   NODES.setupCoat.selector.addEventListener('click', changeColorHandler(NODES.setupCoat));
   NODES.setupEyes.selector.addEventListener('click', changeColorHandler(NODES.setupEyes));
