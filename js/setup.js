@@ -146,22 +146,12 @@ var userNameKeydownHandler = function (evt) {
   }
 };
 
-var changePartColor = function (obj) {
-  var randColor = getRandomItem(obj.color);
-  obj.selector.style = obj.property + randColor;
-  obj.input.value = randColor;
-};
-
-var changeFireballColorHandler = function () {
-  changePartColor(NODES.setupFireball);
-};
-
-var changeCoatColorHandler = function () {
-  changePartColor(NODES.setupCoat);
-};
-
-var changeEyesColorHandler = function () {
-  changePartColor(NODES.setupEyes);
+var changeColorHandler = function (obj) {
+  return function () {
+    var randColor = getRandomItem(obj.color);
+    obj.selector.style = obj.property + randColor;
+    obj.input.value = randColor;
+  };
 };
 
 var main = function () {
@@ -173,9 +163,9 @@ var main = function () {
   NODES.setupClose.addEventListener('keydown', closeDialogKeydownHandler);
   NODES.setupUserName.addEventListener('keydown', userNameKeydownHandler);
 
-  NODES.setupFireball.selector.addEventListener('click', changeFireballColorHandler);
-  NODES.setupCoat.selector.addEventListener('click', changeCoatColorHandler);
-  NODES.setupEyes.selector.addEventListener('click', changeEyesColorHandler);
+  NODES.setupFireball.selector.addEventListener('click', changeColorHandler(NODES.setupFireball));
+  NODES.setupCoat.selector.addEventListener('click', changeColorHandler(NODES.setupCoat));
+  NODES.setupEyes.selector.addEventListener('click', changeColorHandler(NODES.setupEyes));
 };
 
 main();
