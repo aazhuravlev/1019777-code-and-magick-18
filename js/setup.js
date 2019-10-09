@@ -51,24 +51,6 @@ var NODES = findNodes(SELECTORS_DATA);
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
-var getRandomBetween = function (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-var getRandomIndex = function (max) {
-  return getRandomBetween(0, max - 1);
-};
-
-var spliceRandomItem = function (arr) {
-  return arr.splice(getRandomIndex(arr.length - 1), 1);
-};
-
-var getRandomItem = function (arr) {
-  return arr[getRandomIndex(arr.length)];
-};
-
 var getWizards = function (quantity) {
   var wizards = [];
   var wizardNames = WIZARD_NAMES.slice(0);
@@ -77,9 +59,9 @@ var getWizards = function (quantity) {
   var eyesColors = EYES_COLORS.slice(0);
   for (var i = 0; i < quantity; i++) {
     wizards.push({
-      name: spliceRandomItem(wizardNames) + ' ' + spliceRandomItem(wizardSurnames),
-      coatColor: spliceRandomItem(coatColors),
-      eyesColor: spliceRandomItem(eyesColors)
+      name: window.spliceRandomItem(wizardNames) + ' ' + window.spliceRandomItem(wizardSurnames),
+      coatColor: window.spliceRandomItem(coatColors),
+      eyesColor: window.spliceRandomItem(eyesColors)
     });
   }
   return wizards;
@@ -149,7 +131,7 @@ var userNameKeydownHandler = function (evt) {
 
 var changeColorHandler = function (obj) {
   return function () {
-    var randColor = getRandomItem(obj.color);
+    var randColor = window.getRandomItem(obj.color);
     obj.selector.style = obj.property + randColor;
     obj.input.value = randColor;
   };
@@ -204,7 +186,6 @@ var dragHandler = function (evt) {
 
 var main = function () {
   NODES.setupSimilarList.appendChild(getFragment(getWizards(WIZARDS_QUANTITY)));
-
   NODES.openUserDialog.addEventListener('click', openDialogClickHandler);
   NODES.openUserDialog.addEventListener('keydown', openDialogKeydownHandler);
   NODES.setupClose.addEventListener('click', closeDialogClickHandler);
