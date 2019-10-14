@@ -11,11 +11,16 @@
     return getRandomBetween(0, max - 1);
   };
 
-  window.spliceRandomItem = function (arr) {
+  var spliceRandomItem = function (arr) {
     return arr.splice(getRandomIndex(arr.length - 1), 1);
   };
 
-  window.getRandomItem = function (arr) {
+  var getRandomItem = function (arr) {
     return arr[getRandomIndex(arr.length)];
+  };
+
+  window.utils = {
+    spliceRandomItem: spliceRandomItem,
+    getRandomItem: getRandomItem
   };
 })();

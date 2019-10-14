@@ -2,17 +2,17 @@
 
 (function () {
   var main = function () {
-    window.load(window.getWizardFragmentHandler, window.errorHandler);
-    window.NODES.openUserDialog.addEventListener('click', window.openDialogClickHandler);
-    window.NODES.openUserDialog.addEventListener('keydown', window.openDialogKeydownHandler);
-    window.NODES.setupClose.addEventListener('click', window.closeDialogClickHandler);
-    window.NODES.setupClose.addEventListener('keydown', window.closeDialogKeydownHandler);
-    window.NODES.setupUserName.addEventListener('keydown', window.userNameKeydownHandler);
-    window.NODES.upload.addEventListener('mousedown', window.dragHandler);
-    window.NODES.setupFireball.selector.addEventListener('click', window.changeColorHandler(window.NODES.setupFireball));
-    window.NODES.setupCoat.selector.addEventListener('click', window.changeColorHandler(window.NODES.setupCoat));
-    window.NODES.setupEyes.selector.addEventListener('click', window.changeColorHandler(window.NODES.setupEyes));
-    window.NODES.form.addEventListener('submit', window.submitHandler);
+    window.backend.load(window.dom.getWizardFragmentHandler, window.dom.errorHandler);
+    window.dom.nodes.openUserDialog.addEventListener('click', window.dom.openDialogClickHandler);
+    window.dom.nodes.openUserDialog.addEventListener('keydown', window.dom.openDialogKeydownHandler);
+    window.dom.nodes.setupClose.addEventListener('click', window.dom.closeDialogClickHandler);
+    window.dom.nodes.setupClose.addEventListener('keydown', window.dom.closeDialogKeydownHandler);
+    window.dom.nodes.setupUserName.addEventListener('keydown', window.dom.userNameKeydownHandler);
+    window.dom.nodes.upload.addEventListener('mousedown', window.dom.dragHandler);
+    window.dom.nodes.setupFireball.selector.addEventListener('click', window.dom.changeColorHandler(window.dom.nodes.setupFireball));
+    window.dom.nodes.setupCoat.selector.addEventListener('click', window.dom.changeColorHandler(window.dom.nodes.setupCoat));
+    window.dom.nodes.setupEyes.selector.addEventListener('click', window.dom.changeColorHandler(window.dom.nodes.setupEyes));
+    window.dom.nodes.form.addEventListener('submit', window.dom.submitHandler);
   };
 
   main();

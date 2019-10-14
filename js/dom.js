@@ -34,23 +34,23 @@
     };
     nodes.setupCoat = {
       selector: nodes.userDialog.querySelector('.wizard-coat'),
-      color: window.COAT_COLORS,
+      color: window.data.coatColors,
       input: nodes.userDialog.querySelector('[name=coat-color]'),
       property: 'fill: '
     };
     nodes.setupEyes = {
       selector: nodes.userDialog.querySelector('.wizard-eyes'),
-      color: window.EYES_COLORS,
+      color: window.data.eyesColors,
       input: nodes.userDialog.querySelector('[name=eyes-color]'),
       property: 'fill: '
     };
     return nodes;
   };
 
-  window.NODES = findNodes(SELECTORS_DATA);
+  var NODES = findNodes(SELECTORS_DATA);
 
   var renderWizard = function (wizard) {
-    var wizardElement = window.NODES.setupSimilarItem.cloneNode(true);
+    var wizardElement = NODES.setupSimilarItem.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
     wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
@@ -59,67 +59,67 @@
     return wizardElement;
   };
 
-  window.getWizardFragmentHandler = function (arr) {
+  var getWizardFragmentHandler = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < WIZARDS_QUANTITY; i++) {
       fragment.appendChild(renderWizard(arr[i]));
     }
-    window.NODES.setupSimilarList.appendChild(fragment);
+    NODES.setupSimilarList.appendChild(fragment);
   };
 
-  window.userDialogEscPressHendler = function (evt) {
+  var userDialogEscPressHendler = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       closeUserDialog();
     }
   };
 
   var openUserDialog = function () {
-    window.NODES.userDialog.classList.remove('hidden');
-    window.NODES.setupSimilar.classList.remove('hidden');
-    document.addEventListener('keydown', window.userDialogEscPressHendler);
+    NODES.userDialog.classList.remove('hidden');
+    NODES.setupSimilar.classList.remove('hidden');
+    document.addEventListener('keydown', userDialogEscPressHendler);
   };
 
   var closeUserDialog = function () {
-    window.NODES.userDialog.classList.add('hidden');
-    window.NODES.setupSimilar.classList.add('hidden');
-    document.removeEventListener('keydown', window.userDialogEscPressHendler);
+    NODES.userDialog.classList.add('hidden');
+    NODES.setupSimilar.classList.add('hidden');
+    document.removeEventListener('keydown', userDialogEscPressHendler);
   };
 
-  window.openDialogClickHandler = function () {
+  var openDialogClickHandler = function () {
     openUserDialog();
   };
 
-  window.closeDialogClickHandler = function () {
+  var closeDialogClickHandler = function () {
     closeUserDialog();
   };
 
-  window.openDialogKeydownHandler = function (evt) {
+  var openDialogKeydownHandler = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       openUserDialog();
     }
   };
 
-  window.closeDialogKeydownHandler = function (evt) {
+  var closeDialogKeydownHandler = function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       closeUserDialog();
     }
   };
 
-  window.userNameKeydownHandler = function (evt) {
+  var userNameKeydownHandler = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       evt.stopPropagation();
     }
   };
 
-  window.changeColorHandler = function (obj) {
+  var changeColorHandler = function (obj) {
     return function () {
-      var randColor = window.getRandomItem(obj.color);
+      var randColor = window.utils.getRandomItem(obj.color);
       obj.selector.style = obj.property + randColor;
       obj.input.value = randColor;
     };
   };
 
-  window.dragHandler = function (evt) {
+  var dragHandler = function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -143,8 +143,8 @@
         y: moveEvt.clientY
       };
 
-      window.NODES.userDialog.style.top = (window.NODES.userDialog.offsetTop - shift.y) + 'px';
-      window.NODES.userDialog.style.left = (window.NODES.userDialog.offsetLeft - shift.x) + 'px';
+      NODES.userDialog.style.top = (NODES.userDialog.offsetTop - shift.y) + 'px';
+      NODES.userDialog.style.left = (NODES.userDialog.offsetLeft - shift.x) + 'px';
     };
 
     var mouseUpHandler = function (upEvt) {
@@ -156,9 +156,9 @@
       if (dragged) {
         var preventDefaultClickHandler = function (preventEvt) {
           preventEvt.preventDefault();
-          window.NODES.upload.removeEventListener('click', preventDefaultClickHandler);
+          NODES.upload.removeEventListener('click', preventDefaultClickHandler);
         };
-        window.NODES.upload.addEventListener('click', preventDefaultClickHandler);
+        NODES.upload.addEventListener('click', preventDefaultClickHandler);
       }
     };
 
@@ -166,12 +166,12 @@
     document.addEventListener('mouseup', mouseUpHandler);
   };
 
-  window.submitHandler = function (evt) {
-    window.save(new FormData(window.NODES.form), closeUserDialog, window.errorHandler);
+  var submitHandler = function (evt) {
+    window.backend.save(new FormData(NODES.form), closeUserDialog, window.errorHandler);
     evt.preventDefault();
   };
 
-  window.errorHandler = function (errorMessage) {
+  var errorHandler = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
@@ -181,5 +181,19 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.dom = {
+    nodes: NODES,
+    getWizardFragmentHandler: getWizardFragmentHandler,
+    openDialogClickHandler: openDialogClickHandler,
+    closeDialogClickHandler: closeDialogClickHandler,
+    openDialogKeydownHandler: openDialogKeydownHandler,
+    closeDialogKeydownHandler: closeDialogKeydownHandler,
+    userNameKeydownHandler: userNameKeydownHandler,
+    changeColorHandler: changeColorHandler,
+    dragHandler: dragHandler,
+    submitHandler: submitHandler,
+    errorHandler: errorHandler
   };
 })();
