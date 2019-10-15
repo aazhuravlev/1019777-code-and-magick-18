@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var WIZARDS_QUANTITY = 4;
 
+  var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
@@ -34,13 +35,13 @@
     };
     nodes.setupCoat = {
       selector: nodes.userDialog.querySelector('.wizard-coat'),
-      color: window.data.coatColors,
+      color: COAT_COLORS,
       input: nodes.userDialog.querySelector('[name=coat-color]'),
       property: 'fill: '
     };
     nodes.setupEyes = {
       selector: nodes.userDialog.querySelector('.wizard-eyes'),
-      color: window.data.eyesColors,
+      color: EYES_COLORS,
       input: nodes.userDialog.querySelector('[name=eyes-color]'),
       property: 'fill: '
     };
@@ -49,25 +50,7 @@
 
   var NODES = findNodes(SELECTORS_DATA);
 
-  var renderWizard = function (wizard) {
-    var wizardElement = NODES.setupSimilarItem.cloneNode(true);
-
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
-
-    return wizardElement;
-  };
-
-  var getWizardFragmentHandler = function (arr) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < WIZARDS_QUANTITY; i++) {
-      fragment.appendChild(renderWizard(arr[i]));
-    }
-    NODES.setupSimilarList.appendChild(fragment);
-  };
-
-  var userDialogEscPressHendler = function (evt) {
+  var userDialogEscPressHandler = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       closeUserDialog();
     }
@@ -76,13 +59,13 @@
   var openUserDialog = function () {
     NODES.userDialog.classList.remove('hidden');
     NODES.setupSimilar.classList.remove('hidden');
-    document.addEventListener('keydown', userDialogEscPressHendler);
+    document.addEventListener('keydown', userDialogEscPressHandler);
   };
 
   var closeUserDialog = function () {
     NODES.userDialog.classList.add('hidden');
     NODES.setupSimilar.classList.add('hidden');
-    document.removeEventListener('keydown', userDialogEscPressHendler);
+    document.removeEventListener('keydown', userDialogEscPressHandler);
   };
 
   var openDialogClickHandler = function () {
@@ -113,7 +96,7 @@
 
   var changeColorHandler = function (obj) {
     return function () {
-      var randColor = window.utils.getRandomItem(obj.color);
+      var randColor = window.util.getRandomItem(obj.color);
       obj.selector.style = obj.property + randColor;
       obj.input.value = randColor;
     };
@@ -167,33 +150,25 @@
   };
 
   var submitHandler = function (evt) {
-    window.backend.save(new FormData(NODES.form), closeUserDialog, window.errorHandler);
+    window.backend.save(new FormData(NODES.form), closeUserDialog, window.backend.errorHandler);
     evt.preventDefault();
   };
 
-  var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
+  var addHandlers = function () {
+    NODES.openUserDialog.addEventListener('click', openDialogClickHandler);
+    NODES.openUserDialog.addEventListener('keydown', openDialogKeydownHandler);
+    NODES.setupClose.addEventListener('click', closeDialogClickHandler);
+    NODES.setupClose.addEventListener('keydown', closeDialogKeydownHandler);
+    NODES.setupUserName.addEventListener('keydown', userNameKeydownHandler);
+    NODES.upload.addEventListener('mousedown', dragHandler);
+    NODES.setupFireball.selector.addEventListener('click', changeColorHandler(NODES.setupFireball));
+    NODES.setupCoat.selector.addEventListener('click', changeColorHandler(NODES.setupCoat));
+    NODES.setupEyes.selector.addEventListener('click', changeColorHandler(NODES.setupEyes));
+    NODES.form.addEventListener('submit', submitHandler);
   };
 
   window.dom = {
     nodes: NODES,
-    getWizardFragmentHandler: getWizardFragmentHandler,
-    openDialogClickHandler: openDialogClickHandler,
-    closeDialogClickHandler: closeDialogClickHandler,
-    openDialogKeydownHandler: openDialogKeydownHandler,
-    closeDialogKeydownHandler: closeDialogKeydownHandler,
-    userNameKeydownHandler: userNameKeydownHandler,
-    changeColorHandler: changeColorHandler,
-    dragHandler: dragHandler,
-    submitHandler: submitHandler,
-    errorHandler: errorHandler
+    addHandlers: addHandlers
   };
 })();

@@ -19,7 +19,7 @@
     return arr[getRandomIndex(arr.length)];
   };
 
-  window.utils = {
+  window.util = {
     spliceRandomItem: spliceRandomItem,
     getRandomItem: getRandomItem
   };
