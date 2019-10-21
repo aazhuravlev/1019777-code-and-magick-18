@@ -149,26 +149,50 @@
     document.addEventListener('mouseup', mouseUpHandler);
   };
 
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
   var submitHandler = function (evt) {
-    window.backend.save(new FormData(NODES.form), closeUserDialog, window.backend.errorHandler);
+    window.backend.save(new FormData(NODES.form), closeUserDialog, errorHandler);
     evt.preventDefault();
   };
 
+  var EVENTS_HANDLERS = {
+    click: 'click',
+    keydown: 'keydown',
+    submit: 'submit',
+    mousedown: 'mousedown'
+  };
+
+  var HANDLERS_DATA = [
+    [NODES.openUserDialog, EVENTS_HANDLERS.click, openDialogClickHandler],
+    [NODES.openUserDialog, EVENTS_HANDLERS.keydown, openDialogKeydownHandler],
+    [NODES.setupClose, EVENTS_HANDLERS.click, closeDialogClickHandler],
+    [NODES.setupClose, EVENTS_HANDLERS.keydown, closeDialogKeydownHandler],
+    [NODES.setupUserName, EVENTS_HANDLERS.keydown, userNameKeydownHandler],
+    [NODES.upload, EVENTS_HANDLERS.mousedown, dragHandler],
+    [NODES.setupFireball.selector, EVENTS_HANDLERS.click, changeColorHandler(NODES.setupFireball)],
+    [NODES.setupCoat.selector, EVENTS_HANDLERS.click, changeColorHandler(NODES.setupCoat)],
+    [NODES.setupEyes.selector, EVENTS_HANDLERS.click, changeColorHandler(NODES.setupEyes)],
+    [NODES.form, EVENTS_HANDLERS.submit, submitHandler]
+  ];
+
   var addHandlers = function () {
-    NODES.openUserDialog.addEventListener('click', openDialogClickHandler);
-    NODES.openUserDialog.addEventListener('keydown', openDialogKeydownHandler);
-    NODES.setupClose.addEventListener('click', closeDialogClickHandler);
-    NODES.setupClose.addEventListener('keydown', closeDialogKeydownHandler);
-    NODES.setupUserName.addEventListener('keydown', userNameKeydownHandler);
-    NODES.upload.addEventListener('mousedown', dragHandler);
-    NODES.setupFireball.selector.addEventListener('click', changeColorHandler(NODES.setupFireball));
-    NODES.setupCoat.selector.addEventListener('click', changeColorHandler(NODES.setupCoat));
-    NODES.setupEyes.selector.addEventListener('click', changeColorHandler(NODES.setupEyes));
-    NODES.form.addEventListener('submit', submitHandler);
+    window.util.setHandlers(HANDLERS_DATA);
   };
 
   window.dom = {
     nodes: NODES,
-    addHandlers: addHandlers
+    addHandlers: addHandlers,
+    errorHandler: errorHandler
   };
 })();

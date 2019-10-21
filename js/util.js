@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var NODE_INDEX = 0;
+  var TYPE_LISTENER_INDEX = 1;
+  var HANDLER_INDEX = 2;
+
   var getRandomBetween = function (min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -19,8 +23,15 @@
     return arr[getRandomIndex(arr.length)];
   };
 
+  var setHandlers = function (arr) {
+    arr.forEach(function (key) {
+      key[NODE_INDEX].addEventListener(key[TYPE_LISTENER_INDEX], key[HANDLER_INDEX]);
+    });
+  };
+
   window.util = {
     spliceRandomItem: spliceRandomItem,
-    getRandomItem: getRandomItem
+    getRandomItem: getRandomItem,
+    setHandlers: setHandlers
   };
 })();
