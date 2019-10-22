@@ -13,7 +13,7 @@
     return wizardElement;
   };
 
-  var renderWizardFragment = function (arr) {
+  var renderWizards = function (arr) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < WIZARDS_QUANTITY; i++) {
       fragment.appendChild(renderWizard(arr[i]));
@@ -22,6 +22,6 @@
   };
 
   window.wizards = {
-    renderWizardFragment: renderWizardFragment
+    render: renderWizards
   };
 })();
