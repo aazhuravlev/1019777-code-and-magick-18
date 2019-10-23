@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var isLoading;
   var wizards = [];
 
@@ -41,6 +40,8 @@
     }));
   };
 
+  var updateWizardsDebounced = window.util.debounce(updateWizards);
+
   var loadData = function () {
     if (wizards.length > 0 || isLoading) {
       return;
@@ -57,6 +58,7 @@
   window.data = {
     getWizards: getWizards,
     loadData: loadData,
-    updateWizards: updateWizards
+    updateWizards: updateWizards,
+    updateWizardsDebounced: updateWizardsDebounced
   };
 })();

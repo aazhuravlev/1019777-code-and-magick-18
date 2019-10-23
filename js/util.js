@@ -4,6 +4,7 @@
   var NODE_INDEX = 0;
   var TYPE_LISTENER_INDEX = 1;
   var HANDLER_INDEX = 2;
+  var DEBOUNCE_INTERVAL = 500;
 
   var getRandomBetween = function (min, max) {
     min = Math.ceil(min);
@@ -29,9 +30,23 @@
     });
   };
 
+  var debounce = function (callback) {
+    var lastTimeout = null;
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(function () {
+        callback.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
+
   window.util = {
     spliceRandomItem: spliceRandomItem,
     getRandomItem: getRandomItem,
-    setHandlers: setHandlers
+    setHandlers: setHandlers,
+    debounce: debounce
   };
 })();

@@ -99,7 +99,7 @@
       var randColor = window.util.getRandomItem(obj.color);
       obj.selector.style = obj.property + randColor;
       obj.input.value = randColor;
-      window.data.updateWizards();
+      window.data.updateWizardsDebounced();
     };
   };
 
