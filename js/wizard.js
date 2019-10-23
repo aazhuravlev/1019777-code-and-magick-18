@@ -14,14 +14,13 @@
   };
 
   var renderWizards = function (arr) {
-    var fragment = document.createDocumentFragment();
+    window.dom.nodes.setupSimilarList.innerHTML = '';
     for (var i = 0; i < WIZARDS_QUANTITY; i++) {
-      fragment.appendChild(renderWizard(arr[i]));
+      window.dom.nodes.setupSimilarList.appendChild(renderWizard(arr[i]));
     }
-    window.dom.nodes.setupSimilarList.appendChild(fragment);
   };
 
-  window.wizards = {
+  window.wizard = {
     render: renderWizards
   };
 })();

@@ -41,6 +41,6 @@
 
   window.backend = {
     load: load,
-    save: save
+    save: save,
   };
 })();
