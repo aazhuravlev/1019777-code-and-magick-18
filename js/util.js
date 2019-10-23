@@ -1,9 +1,11 @@
 'use strict';
 
 (function () {
-  var NODE_INDEX = 0;
-  var TYPE_LISTENER_INDEX = 1;
-  var HANDLER_INDEX = 2;
+  var Index = {
+    NODE: 0,
+    TYPE_LISTENER: 1,
+    HANDLER: 2
+  };
   var DEBOUNCE_INTERVAL = 500;
 
   var getRandomBetween = function (min, max) {
@@ -26,7 +28,7 @@
 
   var setHandlers = function (arr) {
     arr.forEach(function (key) {
-      key[NODE_INDEX].addEventListener(key[TYPE_LISTENER_INDEX], key[HANDLER_INDEX]);
+      key[Index.NODE].addEventListener(key[Index.TYPE_LISTENER], key[Index.HANDLER]);
     });
   };
 
