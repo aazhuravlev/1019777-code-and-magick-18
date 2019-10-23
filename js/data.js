@@ -30,7 +30,7 @@
   };
 
   var updateWizards = function () {
-    var wizardsClone = window.data.getWizards().slice();
+    var wizardsClone = getWizards().slice();
     window.wizard.render(wizardsClone.sort(function (left, right) {
       var rankDiff = getRank(right) - getRank(left);
       if (rankDiff === 0) {
