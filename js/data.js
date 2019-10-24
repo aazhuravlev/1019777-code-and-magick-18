@@ -8,17 +8,18 @@
     return wizards;
   };
 
-  var getRank = function (wizard) {
-    var rank = 0;
-    if (wizard.colorCoat === window.dom.nodes.setupCoat.input.value) {
-      rank += 2;
-    }
-    if (wizard.colorEyes === window.dom.nodes.setupEyes.input.value) {
-      rank += 1;
-    }
-    return rank;
+  var checkWizardColorCoat = function (wizard) {
+    return wizard.colorCoat === window.dom.nodes.setupCoat.input.value ? 10 : 0;
   };
 
+  var checkWizardColorEyes = function (wizard) {
+    return wizard.colorEyes === window.dom.nodes.setupEyes.input.value ? 1 : 0;
+  };
+
+  var getRank = function (wizard) {
+    return checkWizardColorCoat(wizard) + checkWizardColorEyes(wizard);
+  };
+/*
   var namesСomparison = function (left, right) {
     if (left > right) {
       return 1;
@@ -28,16 +29,18 @@
       return 0;
     }
   };
+*/
+  var comparator = function (left, right) {
+    var rankDiff = getRank(right) - getRank(left);
+    if (rankDiff === 0) {
+      rankDiff = left.name.localeCompare(right.name);
+    }
+    return rankDiff;
+  };
 
   var updateWizards = function () {
     var wizardsClone = getWizards().slice();
-    window.wizard.render(wizardsClone.sort(function (left, right) {
-      var rankDiff = getRank(right) - getRank(left);
-      if (rankDiff === 0) {
-        rankDiff = namesСomparison(left.name, right.name);
-      }
-      return rankDiff;
-    }));
+    window.wizard.render(wizardsClone.sort(comparator));
   };
 
   var updateWizardsDebounced = window.util.debounce(updateWizards);
