@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var Index = {
-    NODE: 0,
-    TYPE_LISTENER: 1,
-    HANDLER: 2
+  var INDEX = {
+    node: 0,
+    typeListener: 1,
+    handler: 2
   };
   var DEBOUNCE_INTERVAL = 500;
 
@@ -28,7 +28,7 @@
 
   var setHandlers = function (arr) {
     arr.forEach(function (key) {
-      key[Index.NODE].addEventListener(key[Index.TYPE_LISTENER], key[Index.HANDLER]);
+      key[INDEX.node].addEventListener(key[INDEX.typeListener], key[INDEX.handler]);
     });
   };
 

@@ -19,7 +19,7 @@
   var getRank = function (wizard) {
     return checkWizardColorCoat(wizard) + checkWizardColorEyes(wizard);
   };
-/*
+  /*
   var namesСomparison = function (left, right) {
     if (left > right) {
       return 1;

@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
-  var Color = {
-    COAT: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
-    EYES: ['black', 'red', 'blue', 'yellow', 'green'],
-    FIREBALL: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
+  var COLOR = {
+    coat: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
+    eyes: ['black', 'red', 'blue', 'yellow', 'green'],
+    fireball: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
   };
-  var Keycode = {
-    ESC: 27,
-    ENTER: 13
+  var KEYCODE = {
+    esc: 27,
+    enter: 13
   };
 
   var SELECTORS_DATA = {
@@ -32,19 +32,19 @@
     nodes.upload = nodes.userDialog.querySelector('.upload');
     nodes.setupFireball = {
       selector: nodes.userDialog.querySelector('.setup-fireball-wrap'),
-      color: Color.FIREBALL,
+      color: COLOR.fireball,
       input: nodes.userDialog.querySelector('input[name=fireball-color]'),
       property: 'background-color: '
     };
     nodes.setupCoat = {
       selector: nodes.userDialog.querySelector('.wizard-coat'),
-      color: Color.COAT,
+      color: COLOR.coat,
       input: nodes.userDialog.querySelector('[name=coat-color]'),
       property: 'fill: '
     };
     nodes.setupEyes = {
       selector: nodes.userDialog.querySelector('.wizard-eyes'),
-      color: Color.EYES,
+      color: COLOR.eyes,
       input: nodes.userDialog.querySelector('[name=eyes-color]'),
       property: 'fill: '
     };
@@ -54,7 +54,7 @@
   var NODES = findNodes(SELECTORS_DATA);
 
   var userDialogEscPressHandler = function (evt) {
-    if (evt.keyCode === Keycode.ESC) {
+    if (evt.keyCode === KEYCODE.esc) {
       closeUserDialog();
     }
   };
@@ -80,19 +80,19 @@
   };
 
   var openDialogKeydownHandler = function (evt) {
-    if (evt.keyCode === Keycode.ENTER) {
+    if (evt.keyCode === KEYCODE.enter) {
       openUserDialog();
     }
   };
 
   var closeDialogKeydownHandler = function (evt) {
-    if (evt.keyCode === Keycode.ENTER) {
+    if (evt.keyCode === KEYCODE.enter) {
       closeUserDialog();
     }
   };
 
   var userNameKeydownHandler = function (evt) {
-    if (evt.keyCode === Keycode.ESC) {
+    if (evt.keyCode === KEYCODE.esc) {
       evt.stopPropagation();
     }
   };
