@@ -1,9 +1,12 @@
 'use strict';
 
 (function () {
-  var NODE_INDEX = 0;
-  var TYPE_LISTENER_INDEX = 1;
-  var HANDLER_INDEX = 2;
+  var INDEX = {
+    node: 0,
+    typeListener: 1,
+    handler: 2
+  };
+  var DEBOUNCE_INTERVAL = 500;
 
   var getRandomBetween = function (min, max) {
     min = Math.ceil(min);
@@ -25,13 +28,27 @@
 
   var setHandlers = function (arr) {
     arr.forEach(function (key) {
-      key[NODE_INDEX].addEventListener(key[TYPE_LISTENER_INDEX], key[HANDLER_INDEX]);
+      key[INDEX.node].addEventListener(key[INDEX.typeListener], key[INDEX.handler]);
     });
+  };
+
+  var debounce = function (callback) {
+    var lastTimeout = null;
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        clearTimeout(lastTimeout);
+      }
+      lastTimeout = setTimeout(function () {
+        callback.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
   };
 
   window.util = {
     spliceRandomItem: spliceRandomItem,
     getRandomItem: getRandomItem,
-    setHandlers: setHandlers
+    setHandlers: setHandlers,
+    debounce: debounce
   };
 })();
