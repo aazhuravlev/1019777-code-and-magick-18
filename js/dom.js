@@ -6,6 +6,8 @@
     eyes: ['black', 'red', 'blue', 'yellow', 'green'],
     fireball: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
   };
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
   var KEYCODE = {
     esc: 27,
     enter: 13
@@ -17,6 +19,9 @@
     setupUserName: '.setup-user-name',
     openUserDialog: '.setup-open',
     similarWizardTemplate: '#similar-wizard-template',
+    fileChooser: '.upload input[type=file]',
+    preview: '.setup-user-pic',
+    openDialogIcon: '.setup-open-icon'
   };
 
   var findNodes = function (obj) {
@@ -170,24 +175,39 @@
     evt.preventDefault();
   };
 
-  var EVENTS_HANDLERS = {
-    click: 'click',
-    keydown: 'keydown',
-    submit: 'submit',
-    mousedown: 'mousedown'
+  var fileChooserHandler = function () {
+    var file = NODES.fileChooser.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (item) {
+      return fileName.endsWith(item);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        NODES.preview.src = reader.result;
+        console.log(NODES.openDialogIcon);
+        NODES.openDialogIcon.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
   };
 
   var HANDLERS_DATA = [
-    [NODES.openUserDialog, EVENTS_HANDLERS.click, openDialogClickHandler],
-    [NODES.openUserDialog, EVENTS_HANDLERS.keydown, openDialogKeydownHandler],
-    [NODES.setupClose, EVENTS_HANDLERS.click, closeDialogClickHandler],
-    [NODES.setupClose, EVENTS_HANDLERS.keydown, closeDialogKeydownHandler],
-    [NODES.setupUserName, EVENTS_HANDLERS.keydown, userNameKeydownHandler],
-    [NODES.upload, EVENTS_HANDLERS.mousedown, dragHandler],
-    [NODES.setupFireball.selector, EVENTS_HANDLERS.click, changeColorHandler(NODES.setupFireball)],
-    [NODES.setupCoat.selector, EVENTS_HANDLERS.click, changeColorHandler(NODES.setupCoat)],
-    [NODES.setupEyes.selector, EVENTS_HANDLERS.click, changeColorHandler(NODES.setupEyes)],
-    [NODES.form, EVENTS_HANDLERS.submit, submitHandler]
+    [NODES.openUserDialog, 'click', openDialogClickHandler],
+    [NODES.openUserDialog, 'keydown', openDialogKeydownHandler],
+    [NODES.setupClose, 'click', closeDialogClickHandler],
+    [NODES.setupClose, 'keydown', closeDialogKeydownHandler],
+    [NODES.setupUserName, 'keydown', userNameKeydownHandler],
+    [NODES.upload, 'mousedown', dragHandler],
+    [NODES.setupFireball.selector, 'click', changeColorHandler(NODES.setupFireball)],
+    [NODES.setupCoat.selector, 'click', changeColorHandler(NODES.setupCoat)],
+    [NODES.setupEyes.selector, 'click', changeColorHandler(NODES.setupEyes)],
+    [NODES.form, 'submit', submitHandler],
+    [NODES.fileChooser, 'change', fileChooserHandler]
   ];
 
   var addHandlers = function () {
