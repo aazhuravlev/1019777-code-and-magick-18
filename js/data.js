@@ -19,17 +19,7 @@
   var getRank = function (wizard) {
     return checkWizardColorCoat(wizard) + checkWizardColorEyes(wizard);
   };
-  /*
-  var namesСomparison = function (left, right) {
-    if (left > right) {
-      return 1;
-    } else if (left < right) {
-      return -1;
-    } else {
-      return 0;
-    }
-  };
-*/
+
   var comparator = function (left, right) {
     var rankDiff = getRank(right) - getRank(left);
     return rankDiff === 0 ? left.name.localeCompare(right.name) : rankDiff;
